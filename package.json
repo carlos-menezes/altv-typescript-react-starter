@@ -4,10 +4,11 @@
     "description": "Bootstrap an alt:V server with TypeScript and jsv2",
     "scripts": {
         "update": "altv-pkg d dev",
-        "build": "node --loader ts-node/esm ./scripts/compiler.ts && node --loader ts-node/esm ./scripts/copy.ts",
+        "build": "node --loader ts-node/esm ./scripts/compiler.ts && npx vite build src-web && node --loader ts-node/esm ./scripts/copy.ts",
         "windows": "npm run build && altv-voice-server.exe && altv-server.exe",
         "linux": "npm run build && ./altv-voice-server && ./altv-server",
-        "dev": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/watch.ts"
+        "dev": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./scripts/watch.ts",
+        "web:dev": "npx vite ./src-web --clearScreen=false --host=localhost --port=3000"
     },
     "author": "carlos-menezes",
     "license": "ISC",
