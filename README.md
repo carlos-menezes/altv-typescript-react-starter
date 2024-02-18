@@ -1,6 +1,8 @@
 # altv-typescript-jsv2-starter
 
-Builds upon [Stuyk/altv-typescript](https://github.com/Stuyk/altv-typescript) and adds support for the JSv2 module and the Voice server.
+![](https://i.imgur.com/rGKCHEL.png)
+
+Builds upon [Stuyk/altv-typescript](https://github.com/Stuyk/altv-typescript) and adds support for the JSv2 module, Voice server and React.
 
 ## Getting Started
 
