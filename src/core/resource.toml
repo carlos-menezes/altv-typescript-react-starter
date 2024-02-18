@@ -1,0 +1,8 @@
+type = "jsv2"
+client-type = "jsv2"
+
+main = 'server/index.js'
+client-files = [ 'client/*' ]
+client-main = 'client/index.js'
+
+deps = []

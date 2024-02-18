@@ -1,0 +1,5 @@
+host = '0.0.0.0'
+playerHost = '0.0.0.0'
+playerPort = 7799
+port = 7798
+secret = 4240677748
