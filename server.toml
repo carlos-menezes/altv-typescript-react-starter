@@ -5,7 +5,7 @@ website = 'test.com'
 gamemode = 'Freeroam'
 
 language = 'en'
-modules = [ 'js-module-v2' ]
+modules = [ 'js-module' ]
 name = 'TestServer'
 players = 2
 port = 7788
