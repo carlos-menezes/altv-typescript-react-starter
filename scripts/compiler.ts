@@ -1,9 +1,13 @@
+import commonjs from '@rollup/plugin-commonjs';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import swcPlugin from '@rollup/plugin-swc';
+import terser from '@rollup/plugin-terser';
+import { Options as SWCOptions } from '@swc/core';
 import fs from 'fs-extra';
-import * as glob from 'glob';
-import swc from '@swc/core';
-import { getResources, normalizeFilePath } from './shared.js';
+import { rollup } from 'rollup';
+import { getResources } from './shared.js';
 
-const SWC_CONFIG: swc.Config = {
+const swcOptions: SWCOptions = {
     jsc: {
         parser: {
             syntax: 'typescript',
@@ -19,14 +23,7 @@ const SWC_CONFIG: swc.Config = {
     sourceMaps: false,
 };
 
-const compileFile = (filePath: string) => {
-    const normalizedPath = normalizeFilePath(filePath);
-    const finalPath = normalizedPath.replace('src/', 'resources/').replace('.ts', '.js');
-    const compiled = swc.transformFileSync(normalizedPath, SWC_CONFIG);
-    fs.outputFileSync(finalPath, compiled.code, { encoding: 'utf-8' });
-};
-
-const buildTargetResource = (name: string) => {
+const buildTargetResource = async (name: string) => {
     const startTime = Date.now();
 
     const resourcePath = `resources/${name}`;
@@ -34,10 +31,19 @@ const buildTargetResource = (name: string) => {
         fs.rmSync(resourcePath, { force: true, recursive: true });
     }
 
-    const filesToCompile = glob.sync(`./src/${name}/**/*.ts`);
-    filesToCompile.forEach(compileFile);
+    ['client', 'server'].forEach(async (dir) => {
+        const bundle = await rollup({
+            input: `./src/${name}/${dir}/index.ts`,
+            plugins: [nodeResolve(), commonjs(), terser(), swcPlugin({ swc: swcOptions })],
+        });
 
-    console.log(`compile\t:: built ${filesToCompile.length} files for ${name} in ${Date.now() - startTime}ms`);
+        await bundle.write({
+            file: `./resources/${name}/${dir}/index.js`,
+            format: 'esm',
+        });
+    });
+
+    console.log(`compile\t:: built client and server files for ${name} in ${Date.now() - startTime}ms`);
 };
 
 getResources().forEach(buildTargetResource);
