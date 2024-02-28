@@ -4,7 +4,7 @@
 
 ## Getting Started
 
-1. Clone the repository: `https://github.com/carlos-menezes/altv-typescript-react-starter`
+1. Clone the repository: `https://github.com/carlos-menezes/altv-typescript-react-starter.git`
 2. Install the dependencies (in the root folder and in `src-web`): `npm i`
 3. Fetch the server files: `npm run update`
 
