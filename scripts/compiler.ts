@@ -34,7 +34,7 @@ const buildTargetResource = async (name: string) => {
     ['client', 'server'].forEach(async (dir) => {
         const bundle = await rollup({
             input: `./src/${name}/${dir}/index.ts`,
-            plugins: [nodeResolve(), commonjs(), terser(), swcPlugin({ swc: swcOptions })],
+            plugins: [nodeResolve({ extensions: ['.ts'] }), commonjs(), terser(), swcPlugin({ swc: swcOptions })],
         });
 
         await bundle.write({
