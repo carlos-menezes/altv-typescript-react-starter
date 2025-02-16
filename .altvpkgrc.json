@@ -3,5 +3,5 @@
     "loadBytecodeModule": false,
     "loadCSharpModule": false,
     "loadJSV2Module": false,
-    "loadVoiceServer": false
+    "loadVoiceServer": true
 }
